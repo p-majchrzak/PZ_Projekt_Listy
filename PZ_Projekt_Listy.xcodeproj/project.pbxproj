@@ -27,6 +27,11 @@
 			path = PZ_Projekt_Listy;
 			sourceTree = "<group>";
 		};
+		C0C77BF33080264C00063642 /* Wytyczne */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Wytyczne;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +46,7 @@
 		C0C77BE0308025E600063642 = {
 			isa = PBXGroup;
 			children = (
+				C0C77BF33080264C00063642 /* Wytyczne */,
 				C0C77BEB308025E600063642 /* PZ_Projekt_Listy */,
 				C0C77BEA308025E600063642 /* Products */,
 			);
@@ -69,6 +75,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				C0C77BEB308025E600063642 /* PZ_Projekt_Listy */,
+				C0C77BF33080264C00063642 /* Wytyczne */,
 			);
 			name = PZ_Projekt_Listy;
 			productName = PZ_Projekt_Listy;
