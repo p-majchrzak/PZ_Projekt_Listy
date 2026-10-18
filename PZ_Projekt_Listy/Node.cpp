@@ -6,3 +6,9 @@
 //
 
 #include "Node.hpp"
+
+Node::Node(int number){
+    data = number;
+    next = nullptr;
+    previous = nullptr;
+}

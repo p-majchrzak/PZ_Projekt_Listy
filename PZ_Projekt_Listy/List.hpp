@@ -9,5 +9,22 @@
 #define List_hpp
 
 #include <stdio.h>
+#include "Node.hpp"
+#include "Iterator.hpp"
+
+class List{
+private:
+    Node *first;
+    Node *last;
+    int size;
+    Iterator iterator;
+public:
+    List();
+    ~List();
+    bool isEmpty();
+    void addFirst(int value);
+    void showAll();
+    //tu trzeba jeszcze cos dodac
+};
 
 #endif /* List_hpp */

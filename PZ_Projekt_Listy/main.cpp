@@ -6,11 +6,17 @@
 //
 
 #include <iostream>
+#include "List.hpp"
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
     
+    List list;
+    list.addFirst(10);
+    list.addFirst(20);
+    list.addFirst(30);
+    list.showAll();
     
     return 0;
 }

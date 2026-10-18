@@ -10,4 +10,13 @@
 
 #include <stdio.h>
 
+class Node{
+public:
+    int data;
+    Node *next;
+    Node *previous;
+    
+    Node(int number);
+};
+
 #endif /* Node_hpp */

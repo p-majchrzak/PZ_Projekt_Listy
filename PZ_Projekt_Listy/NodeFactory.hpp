@@ -8,6 +8,12 @@
 #ifndef NodeFactory_hpp
 #define NodeFactory_hpp
 
+#include "Node.hpp"
 #include <stdio.h>
+
+class NodeFactory{
+public:
+    static Node *create(int value);
+};
 
 #endif /* NodeFactory_hpp */

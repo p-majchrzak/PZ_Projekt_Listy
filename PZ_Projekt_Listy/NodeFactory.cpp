@@ -6,3 +6,7 @@
 //
 
 #include "NodeFactory.hpp"
+
+Node* NodeFactory::create(int value){
+    return new Node(value);
+}
