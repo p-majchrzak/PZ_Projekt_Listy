@@ -1,2 +1,8 @@
-#include "List.hpp"
+//
+//  List.cpp
+//  PZ_Projekt_Listy
+//
+//  Created by Piotr Majchrzak on 18/10/2026.
+//
 
+#include "List.hpp"
