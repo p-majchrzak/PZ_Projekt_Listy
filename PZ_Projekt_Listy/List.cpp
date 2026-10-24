@@ -69,3 +69,36 @@ void List::addLast(int value){
     size++;
     iterator.setCurrent(first);
 }
+void List::addAt(int index, int value){
+    if(index < 0 || index > size){
+        cout << "Nieprawidlowy indeks!" << endl;
+        return;
+    }
+
+    if(index == 0){
+        addFirst(value);
+        return;
+    }
+
+    if(index == size){
+        addLast(value);
+        return;
+    }
+
+    Node *current = first;
+
+    for(int i = 0; i < index; i++){
+        current = current->next;
+    }
+
+    Node *node = NodeFactory::create(value);
+
+    node->next = current;
+    node->previous = current->previous;
+    current->previous->next = node;
+    current->previous = node;
+
+    size++;
+    iterator.setCurrent(first);
+}
+

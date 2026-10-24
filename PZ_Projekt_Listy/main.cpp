@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
     list.addLast(40);
     list.addLast(50);
 
+    list.addAt(1, 15);
     list.showAll();
-
     return 0;
 }
