@@ -24,6 +24,7 @@ public:
     bool isEmpty();
     void addFirst(int value);
     void showAll();
+    void addLast(int value);
     //tu trzeba jeszcze cos dodac
 };
 

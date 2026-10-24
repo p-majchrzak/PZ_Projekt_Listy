@@ -11,12 +11,17 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    
+
     List list;
+
     list.addFirst(10);
     list.addFirst(20);
     list.addFirst(30);
+
+    list.addLast(40);
+    list.addLast(50);
+
     list.showAll();
-    
+
     return 0;
 }

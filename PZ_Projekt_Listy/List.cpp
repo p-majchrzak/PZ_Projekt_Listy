@@ -55,3 +55,17 @@ void List::showAll(){
         counter++;
     }
 }
+void List::addLast(int value){
+    Node *node = NodeFactory::create(value);
+
+    if(isEmpty()){
+        first = last = node;
+    }else{
+        node->previous = last;
+        last->next = node;
+        last = node;
+    }
+
+    size++;
+    iterator.setCurrent(first);
+}
