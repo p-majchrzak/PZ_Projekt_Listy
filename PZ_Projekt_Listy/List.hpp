@@ -29,6 +29,7 @@ public:
     void removeFirst();
     void removeLast();
     void removeAt(int index);
+    void showReverse();
     //tu trzeba jeszcze cos dodac
 };
 

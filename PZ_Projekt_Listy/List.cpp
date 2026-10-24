@@ -171,3 +171,13 @@ void List::removeAt(int index){
     size--;
     iterator.setCurrent(first);
 }
+void List::showReverse(){
+    int counter = 1;
+    Node *current = last;
+
+    while(current != nullptr){
+        cout << counter << ") " << current->data << endl;
+        current = current->previous;
+        counter++;
+    }
+}

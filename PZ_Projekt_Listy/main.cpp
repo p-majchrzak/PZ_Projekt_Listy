@@ -20,23 +20,11 @@ int main(int argc, const char * argv[]) {
     list.addLast(40);
     list.addLast(50);
 
-    cout << "Lista poczatkowa:" << endl;
+    cout << "Lista w normalnej kolejnosci:" << endl;
     list.showAll();
 
-    cout << "\nUsuwanie elementu pod indeksem 2:" << endl;
-    list.removeAt(2);
-    list.showAll();
-
-    cout << "\nUsuwanie pierwszego elementu:" << endl;
-    list.removeAt(0);
-    list.showAll();
-
-    cout << "\nUsuwanie ostatniego elementu:" << endl;
-    list.removeAt(2);
-    list.showAll();
-
-    cout << "\nTest nieprawidlowego indeksu:" << endl;
-    list.removeAt(10);
+    cout << "\nLista w odwrotnej kolejnosci:" << endl;
+    list.showReverse();
 
     return 0;
 }
