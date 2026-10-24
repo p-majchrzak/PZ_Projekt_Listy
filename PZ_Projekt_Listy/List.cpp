@@ -142,3 +142,32 @@ void List::removeLast(){
     size--;
     iterator.setCurrent(first);
 }
+void List::removeAt(int index){
+    if(index < 0 || index >= size){
+        cout << "Nieprawidlowy indeks!" << endl;
+        return;
+    }
+
+    if(index == 0){
+        removeFirst();
+        return;
+    }
+
+    if(index == size - 1){
+        removeLast();
+        return;
+    }
+
+    Node *current = first;
+
+    for(int i = 0; i < index; i++){
+        current = current->next;
+    }
+
+    current->previous->next = current->next;
+    current->next->previous = current->previous;
+
+    delete current;
+    size--;
+    iterator.setCurrent(first);
+}

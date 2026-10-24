@@ -28,6 +28,7 @@ public:
     void addAt(int index, int value);
     void removeFirst();
     void removeLast();
+    void removeAt(int index);
     //tu trzeba jeszcze cos dodac
 };
 
