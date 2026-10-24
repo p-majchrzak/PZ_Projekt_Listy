@@ -16,5 +16,35 @@ void Iterator::setCurrent(Node *node){
 }
 
 int Iterator::getValue(){
+    if(current == nullptr){
+        return -1;
+    }
+
     return current->data;
+}
+
+bool Iterator::hasNext(){
+    return current != nullptr && current->next != nullptr;
+}
+
+bool Iterator::hasPrevious(){
+    return current != nullptr && current->previous != nullptr;
+}
+
+int Iterator::next(){
+    if(hasNext()){
+        current = current->next;
+        return current->data;
+    }
+
+    return -1;
+}
+
+int Iterator::previous(){
+    if(hasPrevious()){
+        current = current->previous;
+        return current->data;
+    }
+
+    return -1;
 }
