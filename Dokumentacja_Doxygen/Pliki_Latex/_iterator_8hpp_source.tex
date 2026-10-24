@@ -1,0 +1,33 @@
+\doxysection{Iterator.\+hpp}
+\hypertarget{_iterator_8hpp_source}{}\label{_iterator_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ \ Iterator.hpp}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ \ PZ\_Projekt\_Listy}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ Created\ by\ Piotr\ Majchrzak\ on\ 18/10/2026.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ Iterator\_hpp}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ Iterator\_hpp}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Node.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }Iterator\{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ \doxymbox{\hyperlink{class_node}{Node}}\ *current;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ Iterator();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ setCurrent(\doxymbox{\hyperlink{class_node}{Node}}\ *node);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ getValue();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasNext();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasPrevious();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ next();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ previous();}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//cos\ tu\ trzeba\ jeszcze\ dodac}}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ Iterator\_hpp\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
