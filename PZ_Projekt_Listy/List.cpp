@@ -101,4 +101,44 @@ void List::addAt(int index, int value){
     size++;
     iterator.setCurrent(first);
 }
+void List::removeFirst(){
+    if(isEmpty()){
+        cout << "Lista jest pusta!" << endl;
+        return;
+    }
 
+    Node *temp = first;
+
+    if(first == last){
+        first = nullptr;
+        last = nullptr;
+    }else{
+        first = first->next;
+        first->previous = nullptr;
+    }
+
+    delete temp;
+    size--;
+    iterator.setCurrent(first);
+}
+
+void List::removeLast(){
+    if(isEmpty()){
+        cout << "Lista jest pusta!" << endl;
+        return;
+    }
+
+    Node *temp = last;
+
+    if(first == last){
+        first = nullptr;
+        last = nullptr;
+    }else{
+        last = last->previous;
+        last->next = nullptr;
+    }
+
+    delete temp;
+    size--;
+    iterator.setCurrent(first);
+}

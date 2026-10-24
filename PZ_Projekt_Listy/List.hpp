@@ -26,6 +26,8 @@ public:
     void showAll();
     void addLast(int value);
     void addAt(int index, int value);
+    void removeFirst();
+    void removeLast();
     //tu trzeba jeszcze cos dodac
 };
 

@@ -17,11 +17,19 @@ int main(int argc, const char * argv[]) {
     list.addFirst(10);
     list.addFirst(20);
     list.addFirst(30);
-
     list.addLast(40);
     list.addLast(50);
 
-    list.addAt(1, 15);
+    cout << "Lista poczatkowa:" << endl;
     list.showAll();
+
+    cout << "\nUsuwanie pierwszego elementu:" << endl;
+    list.removeFirst();
+    list.showAll();
+
+    cout << "\nUsuwanie ostatniego elementu:" << endl;
+    list.removeLast();
+    list.showAll();
+
     return 0;
 }
