@@ -17,7 +17,17 @@ List::List(){
     size = 0;
 }
 List::~List(){
-    //dodac zwalnianie pamieci
+    Node *current = first;
+
+    while(current != nullptr){
+        Node *temp = current;
+        current = current->next;
+        delete temp;
+    }
+
+    first = nullptr;
+    last = nullptr;
+    size = 0;
 }
 bool List::isEmpty(){
     return first == nullptr;
