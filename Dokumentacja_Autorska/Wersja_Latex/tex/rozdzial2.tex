@@ -1,0 +1,39 @@
+\newpage
+\section{Analiza problemu}
+
+\subsection{Zastosowanie listy dwukierunkowej}
+Lista dwukierunkowa jest strukturą danych wykorzystywaną w programowaniu do przechowywania i organizowania elementów, które można przeglądać w obu kierunkach. Stosuje się ją między innymi w odtwarzaczach muzycznych, historii przeglądania stron internetowych, nawigacji między otwartymi dokumentami oraz w implementacji niektórych kolejek i list. Jej zaletą jest możliwość dynamicznego dodawania i usuwania elementów bez konieczności przesuwania pozostałych danych.
+
+\subsection{Sposób działania algorytmu}
+Lista dwukierunkowa składa się z węzłów, z których każdy przechowuje wartość oraz dwa wskaźniki: na poprzedni i następny element. Pierwszy węzeł nie posiada poprzednika, a ostatni nie posiada następnika. Dodawanie elementu polega na utworzeniu nowego węzła i odpowiednim ustawieniu wskaźników, natomiast usuwanie wymaga połączenia ze sobą sąsiednich węzłów. Przeglądanie listy odbywa się przez przechodzenie między węzłami, a czyszczenie polega na usunięciu wszystkich elementów i zwolnieniu zajmowanej pamięci.
+
+\subsection{Przykład działania listy dwukierunkowej}
+Przykładowo, lista może przechowować liczby 10, 20 i 30.
+
+Początkowo lista jest pusta:
+\begin{verbatim}
+NULL
+\end{verbatim}
+
+Po dodaniu liczb 10, 20 i 30 na koniec listy otrzymujemy:
+\begin{verbatim}
+NULL <- 10 <-> 20 <-> 30 -> NULL
+\end{verbatim}
+
+Przechodząc od początku, program wyświetli liczby w kolejności: 10, 20, 30. Przechodząc od końca, wyświetli: 30, 20, 10.
+
+Jeżeli usuniemy element o wartości 20, wskaźniki zostaną zaktualizowane, a lista będzie wyglądać następująco:
+\begin{verbatim}
+NULL <- 10 <-> 30 -> NULL
+\end{verbatim}
+
+W ten sposób można dodawać, usuwać i przeglądać liczby bez konieczności przesuwania pozostałych elementów.
+
+\subsection{Opis wykorzystanych narzędzi}
+\textbf{Git} to system kontroli wersji, który umożliwia zapisywanie historii zmian w projekcie, porównywanie wersji kodu oraz przywracanie wcześniejszych stanów programu.
+
+\textbf{GitHub} to internetowa platforma służąca do przechowywania repozytoriów Git i współpracy nad projektami. Umożliwia przesyłanie zmian na serwer, pobieranie projektu do różnych lokalizacji oraz synchronizowanie pracy.
+
+\textbf{Doxygen} to narzędzie służące do automatycznego generowania dokumentacji na podstawie komentarzy umieszczonych w kodzie źródłowym. Może tworzyć dokumentację w różnych formatach, w tym w formacie LaTeX, z którego można wygenerować dokument PDF.
+
+\textbf{LaTeX} to system przygotowywania dokumentów, szczególnie przydatny przy tworzeniu dokumentacji technicznej i naukowej. W projekcie może zostać wykorzystany do opracowania dokumentacji projektowej oraz wygenerowania dokumentu PDF.

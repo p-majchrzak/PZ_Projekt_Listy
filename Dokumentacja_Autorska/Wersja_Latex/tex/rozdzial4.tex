@@ -1,0 +1,356 @@
+\newpage
+\section{Implementacja}
+
+Implementacja projektu \texttt{PZ\_Projekt\_Listy} została wykonana w języku C++. Program wykorzystuje listę dwukierunkową, której elementy są przechowywane w pamięci dynamicznej. Każdy element zawiera wartość liczbową oraz wskaźniki umożliwiające przechodzenie do następnego i poprzedniego elementu.
+
+Kod projektu został podzielony na pliki nagłówkowe \texttt{.hpp} oraz pliki źródłowe \texttt{.cpp}. W przedstawionej implementacji wykorzystano klasy \texttt{Node} i \texttt{List}, a także odwołania do klas \texttt{NodeFactory} oraz \texttt{Iterator}.
+
+\subsection{Implementacja klasy Node}
+
+Klasa \texttt{Node} reprezentuje pojedynczy element listy. Przechowuje wartość liczbową w polu \texttt{data} oraz dwa wskaźniki: \texttt{next} i \texttt{previous}. Pierwszy wskazuje następny element listy, a drugi element poprzedni.
+
+Deklaracja klasy znajduje się w pliku \texttt{Node.hpp}.
+
+\begin{lstlisting}[language=C++, caption={Deklaracja klasy Node}]
+#ifndef Node_hpp
+#define Node_hpp
+
+#include <stdio.h>
+
+class Node{
+public:
+    int data;
+    Node *next;
+    Node *previous;
+
+    Node(int number);
+};
+
+#endif /* Node_hpp */
+\end{lstlisting}
+
+Konstruktor klasy \texttt{Node} przyjmuje wartość liczbową, którą zapisuje w polu \texttt{data}. Oba wskaźniki są inicjalizowane wartością \texttt{nullptr}, ponieważ nowo utworzony element nie jest jeszcze połączony z innymi elementami listy.
+
+\begin{lstlisting}[language=C++, caption={Konstruktor klasy Node}]
+#include "Node.hpp"
+
+Node::Node(int number){
+    data = number;
+    next = nullptr;
+    previous = nullptr;
+}
+\end{lstlisting}
+
+Takie rozwiązanie pozwala na późniejsze połączenie elementu z pozostałymi węzłami listy poprzez ustawienie odpowiednich wskaźników.
+
+\subsection{Inicjalizacja i zwalnianie pamięci}
+
+Konstruktor klasy \texttt{List} ustawia wskaźniki \texttt{first} oraz \texttt{last} na \texttt{nullptr}. Oznacza to, że lista początkowo nie zawiera żadnych elementów. Zmienna \texttt{size} otrzymuje wartość zero.
+
+\begin{lstlisting}[language=C++, caption={Konstruktor i destruktor klasy List}]
+List::List(){
+    first = nullptr;
+    last = nullptr;
+    size = 0;
+}
+
+List::~List(){
+    clear();
+}
+\end{lstlisting}
+
+Destruktor wywołuje metodę \texttt{clear()}, która usuwa wszystkie elementy listy i zwalnia zajmowaną przez nie pamięć. Dzięki temu po zakończeniu działania obiektu wykonywane jest czyszczenie dynamicznie zaalokowanych węzłów.
+
+Do sprawdzania, czy lista jest pusta, służy metoda \texttt{isEmpty()}.
+
+\begin{lstlisting}[language=C++, caption={Sprawdzanie, czy lista jest pusta}]
+bool List::isEmpty(){
+    return first == nullptr;
+}
+\end{lstlisting}
+
+Metoda zwraca wartość \texttt{true}, gdy wskaźnik \texttt{first} nie wskazuje na żaden element. W przeciwnym przypadku zwracana jest wartość \texttt{false}.
+
+\subsection{Dodawanie elementów do listy}
+
+Metoda \texttt{addFirst()} dodaje nowy element na początku listy. W tym celu tworzy węzeł za pomocą metody \texttt{NodeFactory::create()}. Jeżeli lista jest pusta, nowy element staje się jednocześnie pierwszym i ostatnim elementem. W przeciwnym przypadku zostaje połączony z dotychczasowym początkiem listy.
+
+\begin{lstlisting}[language=C++, caption={Dodawanie elementu na początku listy}]
+void List::addFirst(int value){
+    Node *node = NodeFactory::create(value);
+
+    if (isEmpty()){
+        first = last = node;
+    }else{
+        node -> next = first;
+        first->previous = node;
+        first = node;
+    }
+
+    size++;
+    iterator.setCurrent(first);
+}
+\end{lstlisting}
+
+Po dodaniu elementu zwiększana jest wartość \texttt{size}. Następnie aktualizowana jest pozycja iteratora za pomocą metody \texttt{setCurrent()}.
+
+Dodawanie elementu na końcu listy realizuje metoda \texttt{addLast()}. Nowy węzeł zostaje połączony z dotychczasowym ostatnim elementem. Wskaźnik \texttt{last} zostaje następnie ustawiony na nowy węzeł.
+
+\begin{lstlisting}[language=C++, caption={Dodawanie elementu na końcu listy}]
+void List::addLast(int value){
+    Node *node = NodeFactory::create(value);
+
+    if(isEmpty()){
+        first = last = node;
+    }else{
+        node->previous = last;
+        last->next = node;
+        last = node;
+    }
+
+    size++;
+    iterator.setCurrent(first);
+}
+\end{lstlisting}
+
+Obie metody obsługują przypadek pustej listy, dzięki czemu pierwszy dodawany element prawidłowo ustawia oba wskaźniki graniczne.
+
+Metoda \texttt{addAt()} umożliwia wstawienie elementu pod wskazanym indeksem. Najpierw sprawdzana jest poprawność indeksu. Wartości mniejsze od zera oraz większe od aktualnego rozmiaru listy są odrzucane. Dla indeksu zerowego wywoływana jest metoda \texttt{addFirst()}, natomiast dla indeksu równego rozmiarowi listy — metoda \texttt{addLast()}.
+
+\begin{lstlisting}[language=C++, caption={Sprawdzanie indeksu w metodzie addAt}]
+void List::addAt(int index, int value){
+    if(index < 0 || index > size){
+        cout << "Nieprawidlowy indeks!" << endl;
+        return;
+    }
+
+    if(index == 0){
+        addFirst(value);
+        return;
+    }
+
+    if(index == size){
+        addLast(value);
+        return;
+    }
+\end{lstlisting}
+
+W przypadku wstawiania elementu wewnątrz listy program przechodzi do węzła znajdującego się pod wskazanym indeksem. Następnie tworzy nowy element i aktualizuje połączenia między sąsiednimi węzłami.
+
+\begin{lstlisting}[language=C++, caption={Wstawianie elementu wewnątrz listy}]
+    Node *current = first;
+
+    for(int i = 0; i < index; i++){
+        current = current->next;
+    }
+
+    Node *node = NodeFactory::create(value);
+
+    node->next = current;
+    node->previous = current->previous;
+    current->previous->next = node;
+    current->previous = node;
+
+    size++;
+    iterator.setCurrent(first);
+}
+\end{lstlisting}
+
+Dzięki aktualizacji obu kierunków połączeń lista zachowuje swoją dwukierunkową strukturę.
+
+\subsection{Wyświetlanie elementów listy}
+
+Do wyświetlania zawartości listy od początku do końca służy metoda \texttt{showAll()}. Przechodzi ona przez kolejne węzły, zaczynając od \texttt{first}, aż do momentu napotkania wartości \texttt{nullptr}. Każdy element jest wyświetlany wraz z numerem porządkowym.
+
+\begin{lstlisting}[language=C++, caption={Wyświetlanie listy w przód}]
+void List::showAll(){
+    int counter = 1;
+    Node *current = first;
+
+    while(current != nullptr){
+        cout << counter << ") "
+             << current->data << endl;
+
+        current = current->next;
+        counter++;
+    }
+}
+\end{lstlisting}
+
+Wyświetlanie w odwrotnym kierunku realizuje metoda \texttt{showReverse()}. W tym przypadku przechodzenie rozpoczyna się od wskaźnika \texttt{last}, a kolejne elementy są odczytywane za pomocą wskaźnika \texttt{previous}.
+
+\begin{lstlisting}[language=C++, caption={Wyświetlanie listy w odwrotnej kolejności}]
+void List::showReverse(){
+    int counter = 1;
+    Node *current = last;
+
+    while(current != nullptr){
+        cout << counter << ") "
+             << current->data << endl;
+
+        current = current->previous;
+        counter++;
+    }
+}
+\end{lstlisting}
+
+Wykorzystanie obu wskaźników pozwala na przechodzenie przez tę samą listę w dwóch kierunkach bez konieczności tworzenia jej dodatkowej kopii.
+
+\subsection{Usuwanie elementów}
+
+Metoda \texttt{removeFirst()} usuwa pierwszy element listy. Na początku sprawdza, czy lista nie jest pusta. Jeśli nie zawiera elementów, wyświetlany jest odpowiedni komunikat i metoda kończy działanie.
+
+\begin{lstlisting}[language=C++, caption={Usuwanie pierwszego elementu}]
+void List::removeFirst(){
+    if(isEmpty()){
+        cout << "Lista jest pusta!" << endl;
+        return;
+    }
+
+    Node *temp = first;
+
+    if(first == last){
+        first = nullptr;
+        last = nullptr;
+    }else{
+        first = first->next;
+        first->previous = nullptr;
+    }
+
+    delete temp;
+    size--;
+    iterator.setCurrent(first);
+}
+\end{lstlisting}
+
+W przypadku listy zawierającej tylko jeden element oba wskaźniki zostają ustawione na \texttt{nullptr}. W przeciwnym przypadku początek listy zostaje przesunięty na kolejny węzeł, a jego wskaźnik \texttt{previous} zostaje wyzerowany. Usunięty węzeł jest zwalniany operatorem \texttt{delete}.
+
+Metoda \texttt{removeLast()} wykonuje analogiczną operację na końcu listy.
+
+\begin{lstlisting}[language=C++, caption={Usuwanie ostatniego elementu}]
+void List::removeLast(){
+    if(isEmpty()){
+        cout << "Lista jest pusta!" << endl;
+        return;
+    }
+
+    Node *temp = last;
+
+    if(first == last){
+        first = nullptr;
+        last = nullptr;
+    }else{
+        last = last->previous;
+        last->next = nullptr;
+    }
+
+    delete temp;
+    size--;
+    iterator.setCurrent(first);
+}
+\end{lstlisting}
+
+W przypadku listy wieloelementowej wskaźnik \texttt{last} zostaje przesunięty na poprzedni węzeł. Następnie jego wskaźnik \texttt{next} jest ustawiany na \texttt{nullptr}.
+
+Usuwanie elementu pod określonym indeksem realizuje metoda \texttt{removeAt()}. Najpierw sprawdzana jest poprawność indeksu. Jeżeli wskazany element znajduje się na początku lub na końcu listy, wykorzystywane są odpowiednio metody \texttt{removeFirst()} i \texttt{removeLast()}.
+
+\begin{lstlisting}[language=C++, caption={Sprawdzanie indeksu w metodzie removeAt}]
+void List::removeAt(int index){
+    if(index < 0 || index >= size){
+        cout << "Nieprawidlowy indeks!" << endl;
+        return;
+    }
+
+    if(index == 0){
+        removeFirst();
+        return;
+    }
+
+    if(index == size - 1){
+        removeLast();
+        return;
+    }
+\end{lstlisting}
+
+Dla elementu znajdującego się wewnątrz listy program odnajduje odpowiedni węzeł i łączy ze sobą jego poprzednika oraz następnika. Następnie usuwa wskazany element i aktualizuje rozmiar listy.
+
+\begin{lstlisting}[language=C++, caption={Usuwanie elementu ze środka listy}]
+    Node *current = first;
+
+    for(int i = 0; i < index; i++){
+        current = current->next;
+    }
+
+    current->previous->next = current->next;
+    current->next->previous = current->previous;
+
+    delete current;
+    size--;
+    iterator.setCurrent(first);
+}
+\end{lstlisting}
+
+Dzięki odpowiedniemu przepięciu wskaźników usunięcie węzła nie powoduje przerwania połączeń pomiędzy pozostałymi elementami listy.
+
+\subsection{Obsługa iteratora}
+
+W klasie \texttt{List} wykorzystano obiekt \texttt{iterator}, który umożliwia przechodzenie do kolejnych i poprzednich elementów. Metody \texttt{showNext()} oraz \texttt{showPrevious()} sprawdzają, czy możliwe jest wykonanie danego kroku.
+
+\begin{lstlisting}[language=C++, caption={Przejście do następnego elementu}]
+void List::showNext(){
+    if(iterator.hasNext()){
+        cout << "Nastepny element: "
+             << iterator.next() << endl;
+    }else{
+        cout << "Brak nastepnego elementu!"
+             << endl;
+    }
+}
+\end{lstlisting}
+
+Jeżeli iterator może przejść do następnego elementu, metoda \texttt{next()} zwraca jego wartość. W przeciwnym przypadku wyświetlany jest komunikat o braku następnego elementu.
+
+Analogicznie działa przechodzenie w przeciwnym kierunku.
+
+\begin{lstlisting}[language=C++, caption={Przejście do poprzedniego elementu}]
+void List::showPrevious(){
+    if(iterator.hasPrevious()){
+        cout << "Poprzedni element: "
+             << iterator.previous() << endl;
+    }else{
+        cout << "Brak poprzedniego elementu!"
+             << endl;
+    }
+}
+\end{lstlisting}
+
+Po wykonaniu operacji dodawania lub usuwania elementów pozycja iteratora jest ustawiana ponownie za pomocą \texttt{iterator.setCurrent(first)}. Pełna implementacja działania iteratora znajduje się w osobnych plikach projektu.
+
+\subsection{Czyszczenie listy}
+
+Metoda \texttt{clear()} usuwa wszystkie elementy listy. Przechodzi przez kolejne węzły, zapamiętuje adres aktualnego elementu, przesuwa wskaźnik na następny węzeł, a następnie usuwa zapamiętany element.
+
+\begin{lstlisting}[language=C++, caption={Usuwanie wszystkich elementów listy}]
+void List::clear(){
+    Node *current = first;
+
+    while(current != nullptr){
+        Node *temp = current;
+        current = current->next;
+        delete temp;
+    }
+
+    first = nullptr;
+    last = nullptr;
+    size = 0;
+    iterator.setCurrent(nullptr);
+}
+\end{lstlisting}
+
+Po zakończeniu pętli wskaźniki \texttt{first} i \texttt{last} są ustawiane na \texttt{nullptr}, a rozmiar listy zostaje wyzerowany. Iterator również otrzymuje wartość \texttt{nullptr}, co odpowiada pustej liście.
+
+\subsection{Podsumowanie implementacji}
+
+Przedstawiona implementacja umożliwia dodawanie, usuwanie i wyświetlanie elementów listy dwukierunkowej. Wykorzystanie wskaźników \texttt{next} i \texttt{previous} umożliwia przechodzenie w obu kierunkach, natomiast wskaźniki \texttt{first} i \texttt{last} zapewniają bezpośredni dostęp do początku i końca struktury.
+
+Tworzenie nowych węzłów odbywa się przez \texttt{NodeFactory::create()}, a obsługa przechodzenia pomiędzy elementami została powiązana z obiektem \texttt{iterator}. Pamięć zajmowana przez elementy jest zwalniana podczas ich usuwania oraz przy czyszczeniu całej listy.
