@@ -15,5 +15,17 @@ int main(int argc, const char * argv[]) {
     cout << "Lista:" << endl;
     list.showAll();
 
+    cout << "\nNastepny element:" << endl;
+    list.showNext();
+
+    cout << "\nNastepny element:" << endl;
+    list.showNext();
+
+    cout << "\nPoprzedni element:" << endl;
+    list.showPrevious();
+
+    cout << "\nPoprzedni element:" << endl;
+    list.showPrevious();
+
     return 0;
 }

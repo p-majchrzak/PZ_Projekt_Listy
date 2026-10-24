@@ -181,3 +181,18 @@ void List::showReverse(){
         counter++;
     }
 }
+void List::showNext(){
+    if(iterator.hasNext()){
+        cout << "Nastepny element: " << iterator.next() << endl;
+    }else{
+        cout << "Brak nastepnego elementu!" << endl;
+    }
+}
+
+void List::showPrevious(){
+    if(iterator.hasPrevious()){
+        cout << "Poprzedni element: " << iterator.previous() << endl;
+    }else{
+        cout << "Brak poprzedniego elementu!" << endl;
+    }
+}

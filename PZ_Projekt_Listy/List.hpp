@@ -30,6 +30,8 @@ public:
     void removeLast();
     void removeAt(int index);
     void showReverse();
+    void showNext();
+    void showPrevious();
     //tu trzeba jeszcze cos dodac
 };
 
