@@ -17,17 +17,7 @@ List::List(){
     size = 0;
 }
 List::~List(){
-    Node *current = first;
-
-    while(current != nullptr){
-        Node *temp = current;
-        current = current->next;
-        delete temp;
-    }
-
-    first = nullptr;
-    last = nullptr;
-    size = 0;
+    clear();
 }
 bool List::isEmpty(){
     return first == nullptr;
@@ -195,4 +185,18 @@ void List::showPrevious(){
     }else{
         cout << "Brak poprzedniego elementu!" << endl;
     }
+}
+void List::clear(){
+    Node *current = first;
+
+    while(current != nullptr){
+        Node *temp = current;
+        current = current->next;
+        delete temp;
+    }
+
+    first = nullptr;
+    last = nullptr;
+    size = 0;
+    iterator.setCurrent(nullptr);
 }

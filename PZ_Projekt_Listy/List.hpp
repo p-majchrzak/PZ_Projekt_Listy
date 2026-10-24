@@ -32,6 +32,7 @@ public:
     void showReverse();
     void showNext();
     void showPrevious();
+    void clear();
     //tu trzeba jeszcze cos dodac
 };
 
